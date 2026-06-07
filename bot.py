@@ -94,9 +94,13 @@ async def play(ctx: commands.Context, *, query: str):
         await msg.edit(content=f"❌ Erro ao buscar a música: {e}")
         return
 
-    source = discord.FFmpegPCMAudio(audio_url, **FFMPEG_OPTS)
-    vc.play(source)
-    await msg.edit(content=f"🎵 Tocando agora: **{title}**")
+    try:
+        source = discord.FFmpegPCMAudio(audio_url, **FFMPEG_OPTS)
+        vc.play(source, after=lambda e: print(f"Erro no player: {e}") if e else None)
+        await msg.edit(content=f"🎵 Tocando agora: **{title}**")
+    except Exception as e:
+        await msg.edit(content=f"❌ Erro ao tocar: {e}")
+        print(f"Erro FFmpeg: {e}")
 
 
 @bot.command(name="stop", aliases=["s"])
