@@ -44,10 +44,7 @@ YDL_OPTS = {
     "quiet": True,
     "default_search": "ytsearch",
     "source_address": "0.0.0.0",
-    "extractor_args": {"youtube": {"player_client": ["ios"]}},
-    "http_headers": {
-        "User-Agent": "com.google.ios.youtube/19.29.1 (iPhone16,2; U; CPU iOS 17_5_1 like Mac OS X;)"
-    },
+    "cookiefile": "cookies.txt",
 }
 
 FFMPEG_OPTS = {
