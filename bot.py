@@ -44,7 +44,7 @@ YDL_OPTS = {
     "quiet": True,
     "default_search": "ytsearch",
     "source_address": "0.0.0.0",
-    "cookiefile": "cookies.txt",
+    "cookiefile": "COOKIES.txt",
 }
 
 FFMPEG_OPTS = {
