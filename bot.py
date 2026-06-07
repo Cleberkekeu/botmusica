@@ -45,6 +45,8 @@ YDL_OPTS = {
     "default_search": "ytsearch",
     "source_address": "0.0.0.0",
     "cookiefile": "COOKIES.txt",
+    "socket_timeout": 15,
+    "verbose": True,
 }
 
 FFMPEG_OPTS = {
@@ -89,9 +91,15 @@ async def play(ctx: commands.Context, *, query: str):
     msg = await ctx.send(f"🔍 Buscando: **{query}**...")
 
     try:
-        audio_url, title = await asyncio.to_thread(get_audio_url, query)
+        audio_url, title = await asyncio.wait_for(
+            asyncio.to_thread(get_audio_url, query),
+            timeout=30.0
+        )
+    except asyncio.TimeoutError:
+        await msg.edit(content="❌ Timeout: busca demorou mais de 30s. Tente novamente.")
+        return
     except Exception as e:
-        await msg.edit(content=f"❌ Erro ao buscar a música: {e}")
+        await msg.edit(content=f"❌ Erro ao buscar: {e}")
         return
 
     try:
